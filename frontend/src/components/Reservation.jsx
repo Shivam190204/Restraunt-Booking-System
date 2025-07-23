@@ -19,7 +19,7 @@ const Reservation = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "https://restraunt-booking-system-1.onrender.com",
+        "https://restraunt-booking-system.onrender.com",
         { firstName, lastName, email, phone, date, time,guest },
         {
           headers: {
