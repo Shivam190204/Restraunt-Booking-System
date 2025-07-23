@@ -9,7 +9,7 @@ const app =express();
 dotenv.config({path: './config/config.env'});
 
 app.use(cors({
-    origin:[process.env.FRONTEND_URL],
+    origin:[process.env."https:/.restraunt-booking-system-1.onrender.com/"],
     methods:["POST"],
     credentials:true,
 }) );
