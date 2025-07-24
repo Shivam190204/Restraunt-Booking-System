@@ -11,16 +11,16 @@ const Reservation = () => {
   const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [phone, setPhone] = useState();
-  const [guest,setGuest] = useState();
+  const [phone, setPhone] = useState("");
+  const [guest, setGuest] = useState("");
   const navigate = useNavigate();
 
   const handleReservation = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "https://restraunt-booking-system.onrender.com",
-        { firstName, lastName, email, phone, date, time,guest },
+        `${process.env.REACT_APP_API_URL}/api/v1/reservation`,
+        { firstName, lastName, email, phone, date, time, guest },
         {
           headers: {
             "Content-Type": "application/json",
@@ -35,10 +35,10 @@ const Reservation = () => {
       setEmail("");
       setTime("");
       setDate("");
-      setGuest();
+      setGuest("");
       navigate("/success");
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Reservation failed");
     }
   };
 
@@ -51,8 +51,8 @@ const Reservation = () => {
         <div className="banner">
           <div className="reservation_form_box">
             <h1>MAKE A RESERVATION</h1>
-            <p>Book Your Table Now !🍽️</p>
-            <form>
+            <p>Book Your Table Now! 🍽️</p>
+            <form onSubmit={handleReservation}>
               <div>
                 <input
                   type="text"
@@ -70,13 +70,11 @@ const Reservation = () => {
               <div>
                 <input
                   type="date"
-                  placeholder="Date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                 />
                 <input
                   type="time"
-                  placeholder="Time"
                   value={time}
                   onChange={(e) => setTime(e.target.value)}
                 />
@@ -85,7 +83,6 @@ const Reservation = () => {
                 <input
                   type="email"
                   placeholder="Email"
-                  className="email_tag"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -99,12 +96,12 @@ const Reservation = () => {
               <div>
                 <input
                   type="number"
-                  placeholder="Enter No of Guests "
+                  placeholder="Enter No of Guests"
                   value={guest}
                   onChange={(e) => setGuest(e.target.value)}
                 />
               </div>
-              <button type="submit" onClick={handleReservation}>
+              <button type="submit">
                 RESERVE NOW{" "}
                 <span>
                   <HiOutlineArrowNarrowRight />
